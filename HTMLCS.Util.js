@@ -236,26 +236,6 @@ _global.HTMLCS.util = function() {
         return hidden;
     };
 
-    /**
-     * Returns true if the element is deliberately hidden from Accessibility APIs using ARIA hidden.
-     *
-     * Not: This is separate to isAccessibilityHidden() due to a need to check specifically for aria hidden.
-     * 
-     * @param {Node} element The element to check.
-     *
-     * @return {Boolean}
-     */
-    self.isAriaHidden = function(element) {
-        do {
-            // WAI-ARIA hidden attribute.
-            if (element.hasAttribute('aria-hidden') && element.getAttribute('aria-hidden') === 'true') {
-                return true;
-            }
-        } while (element = element.parentElement);
-
-        return false;
-    };
-
 
     /**
      * Returns true if the element is deliberately hidden from Accessibility APIs.
@@ -788,86 +768,6 @@ _global.HTMLCS.util = function() {
         return text;
     };
 
-
-    /**
-     * Find a parent node matching a selector.
-     *
-     * @param {DOMNode} node     Node to search from.
-     * @param {String}  selector The selector to search.
-     *
-     * @return DOMNode|null
-     */
-    self.findParentNode = function(node, selector) {
-        if (node && node.matches && node.matches(selector)) {
-            return node;
-        }
-
-        while (node && node.parentNode) {
-            node = node.parentNode;
-
-            if (node && node.matches && node.matches(selector)) {
-                return node;
-            }
-        }
-
-        return null;
-    };
-
-
-    /**
-     * Iterate parent nodes of an element.
-     *
-     * @param {DOMNode}  node Node to search from.
-     * @param {Function} cb    Callback function providing each parent node.
-     *
-     * @return void
-     */
-    self.eachParentNode = function(node, cb) {
-        while (node && node.parentNode) {
-            cb(node);
-            node = node.parentNode;
-        };
-    };
-
-
-    /**
-     * Returns TRUE if the provided node name is not a valid phrasing node.
-     *
-     * @param {String} nodeName The node name to test.
-     *
-     * @return {Boolean}
-     */
-    self.isPhrasingNode = function(nodeName) {
-        var nodeNames = [ 'abbr', 'audio', 'b', 'bdo', 'br', 'button', 'canvas', 'cite', 'code', 'command', 'data',
-            'datalist', 'dfn', 'em', 'embed', 'i', 'iframe', 'img', 'input', 'kbd', 'keygen', 'label', 'mark', 'math',
-            'meter', 'noscript', 'object', 'output', 'progress', 'q', 'ruby', 'samp', 'script', 'select', 'small',
-            'span', 'strong', 'sub', 'sup', 'svg', 'textarea', 'time', 'var', 'video', 'wbr'];
-
-        return nodeNames.indexOf(nodeName.toLowerCase()) !== -1;
-    };
-
-
-    self.getChildrenForTable = function(table, childNodeName)
-    {
-        if (table.nodeName.toLowerCase() !== 'table') {
-            return null;
-        }
-
-        var rows    = [];
-        var allRows = table.getElementsByTagName(childNodeName);
-
-        // Filter out rows that don't belong to this table.
-        for (var i = 0, l = allRows.length; i<l; i++) {
-            if (self.findParentNode(allRows[i], 'table') === table) {
-                rows.push(allRows[i]);
-            }
-        }
-
-        return rows;
-
-    };
-
-
     /**
      * Test for the correct headers attributes on table cell elements.
      *
@@ -900,7 +800,7 @@ _global.HTMLCS.util = function() {
             wrongHeaders: []
         }
 
-        var rows      = self.getChildrenForTable(element, 'tr');
+        var rows      = element.getElementsByTagName('tr');
         var tdCells   = {};
         var skipCells = [];
 
@@ -1071,7 +971,7 @@ _global.HTMLCS.util = function() {
         }
 
 
-        var rows       = self.getChildrenForTable(table, 'tr');
+        var rows       = table.getElementsByTagName('tr');
         var skipCells  = [];
         var headingIds = {
             rows: {},

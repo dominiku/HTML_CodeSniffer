@@ -12,7 +12,6 @@ Assert: No Error *.H91.Button.Name on #labelledByButton
 Assert: Error *.H53.ARIA6 on #objectNoLabel
 Assert: No Error *.H53.ARIA6 on #objectLabelledBy
 Assert: No Error *.H53.ARIA6 on #objectLabel
-Assert: No Error *.H91.A.NoContent on #hyperlinkLabel
 -->
 </head>
 <body>
@@ -42,8 +41,6 @@ Assert: No Error *.H91.A.NoContent on #hyperlinkLabel
 <div id="monkey">My monkey</div>
 
 <object id="objectLabel" data="x.jpg" aria-label="monkey"></object>
-
-<a id="hyperlinkLabel" href="http://www.squiz.net" aria-label="Label as valid content"></a>
 
 </form>
 </body>

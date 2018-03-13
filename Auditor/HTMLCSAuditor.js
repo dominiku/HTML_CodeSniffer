@@ -150,8 +150,8 @@ _global.HTMLCSAuditor = new function()
     var buildHeaderSection = function(standard, wrapper) {
         var header       = _doc.createElement('div');
         header.className = _prefix + 'header';
-        header.innerHTML = 'HTML_CodeSniffer by Squiz';
-        header.setAttribute('title', 'Using standard ' + standard);
+        header.innerHTML = _global.translation["auditor_name"];
+        header.setAttribute('title', _global.translation["auditor_using_standard"] + ' ' + standard);
 
         var dragging = false;
         var prevX    = 0;
@@ -202,7 +202,7 @@ _global.HTMLCSAuditor = new function()
 
         var closeIcon       = _doc.createElement('div');
         closeIcon.className = _prefix + 'close';
-        closeIcon.setAttribute('title', 'Close');
+        closeIcon.setAttribute('title', _global.translation["auditor_close"]);
         closeIcon.onmousedown = function() {
             self.close.call(self);
         }
@@ -237,25 +237,25 @@ _global.HTMLCSAuditor = new function()
         var divider = ', &#160;<span class="' + _prefix + 'divider"></span>';
 
         if (errors > 0) {
-            var typeName = 'Errors';
+            var typeName = _global.translation["auditor_errors"];
             if (errors === 1) {
-                typeName = 'Error';
+                typeName = _global.translation["auditor_error"];
             }
             leftContents.push('<strong>' + errors + '</strong> ' + typeName);
         }
 
         if (warnings > 0) {
-            var typeName = 'Warnings';
+            var typeName = _global.translation["auditor_warnings"];
             if (warnings === 1) {
-                typeName = 'Warning';
+                typeName = _global.translation["auditor_warning"];
             }
             leftContents.push('<strong>' + warnings + '</strong> ' + typeName);
         }
 
         if (notices > 0) {
-            var typeName = 'Notices';
+            var typeName = _global.translation["auditor_notices"];
             if (notices === 1) {
-                typeName = 'Notice';
+                typeName = _global.translation["auditor_notice"];
             }
             leftContents.push('<strong>' + notices + '</strong> ' + typeName);
         }
@@ -273,7 +273,7 @@ _global.HTMLCSAuditor = new function()
         lineageHomeLink.href      = 'javascript:';
 
         var lineageHomeSpan       = _doc.createElement('span');
-        lineageHomeSpan.innerHTML = 'Home';
+        lineageHomeSpan.innerHTML = _global.translation["auditor_home"];
         lineageHomeLink.appendChild(lineageHomeSpan);
 
         lineageHomeLink.onmousedown = function() {
@@ -325,7 +325,7 @@ _global.HTMLCSAuditor = new function()
         lineageHomeLink.href      = 'javascript:';
 
         var lineageHomeSpan       = _doc.createElement('span');
-        lineageHomeSpan.innerHTML = 'Home';
+        lineageHomeSpan.innerHTML = _global.translation["auditor_home"];
         lineageHomeLink.appendChild(lineageHomeSpan);
 
         lineageHomeLink.onmousedown = function() {
@@ -339,8 +339,8 @@ _global.HTMLCSAuditor = new function()
         var lineageReportLink       = _doc.createElement('a');
         lineageReportLink.className = _prefix + 'lineage-link';
         lineageReportLink.href      = 'javascript:';
-        lineageReportLink.innerHTML = 'Report';
-        lineageReportLink.setAttribute('title', 'Back to Report');
+        lineageReportLink.innerHTML = _global.translation["auditor_report"];
+        lineageReportLink.setAttribute('title', _global.translation["auditor_back_to_report"]);
 
         lineageReportLink.onmousedown = function() {
             var list = _doc.querySelectorAll('.HTMLCS-inner-wrapper')[0];
@@ -355,7 +355,7 @@ _global.HTMLCSAuditor = new function()
         // Issue Count item.
         var lineageTotalsItem       = _doc.createElement('li');
         lineageTotalsItem.className = _prefix + 'lineage-item';
-        lineageTotalsItem.innerHTML = 'Issue ' + issue + ' of ' + totalIssues;
+        lineageTotalsItem.innerHTML = _global.translation["auditor_issue"] + ' ' + issue + ' ' + _global.translation["auditor_of"] + ' ' + totalIssues;
 
         lineageHomeItem.appendChild(lineageHomeLink);
         lineageReportItem.appendChild(lineageReportLink);
@@ -367,7 +367,7 @@ _global.HTMLCSAuditor = new function()
         var buttonGroup       = _doc.createElement('div');
         buttonGroup.className = _prefix + 'button-group';
 
-        var prevButton = buildSummaryButton(_prefix + 'button-previous-issue', 'previous', 'Previous Issue', function(target) {
+        var prevButton = buildSummaryButton(_prefix + 'button-previous-issue', 'previous', _global.translation["auditor_previous_issue"], function(target) {
             var newIssue = Number(issue) - 1;
 
             if (newIssue >= 1) {
@@ -383,7 +383,7 @@ _global.HTMLCSAuditor = new function()
             }//end if
         });
 
-        var nextButton = buildSummaryButton(_prefix + 'button-next-issue', 'next', 'Next Issue', function(target) {
+        var nextButton = buildSummaryButton(_prefix + 'button-next-issue', 'next', _global.translation["auditor_next_issue"], function(target) {
             var newIssue = Number(issue) + 1;
 
             if (newIssue <= _messages.length) {
@@ -481,7 +481,7 @@ _global.HTMLCSAuditor = new function()
         useStandardDiv.id = _prefix + 'settings-use-standard';
 
         var useStandardLabel       = _doc.createElement('label');
-        useStandardLabel.innerHTML = 'Standards:';
+        useStandardLabel.innerHTML = _global.translation["auditor_standards"]+':';
         useStandardLabel.setAttribute('for', _prefix + 'settings-use-standard-select');
 
         var useStandardSelect       = _doc.createElement('select');
@@ -511,11 +511,11 @@ _global.HTMLCSAuditor = new function()
 
         var issueCountHelpDiv       = _doc.createElement('div');
         issueCountHelpDiv.id        = _prefix + 'settings-issue-count-help';
-        issueCountHelpDiv.innerHTML = 'Select the types of issues to include in the report';
+        issueCountHelpDiv.innerHTML = _global.translation["auditor_select_types"];
 
         var viewReportDiv       = _doc.createElement('div');
         viewReportDiv.id        = _prefix + 'settings-view-report';
-        viewReportDiv.innerHTML = 'View Report';
+        viewReportDiv.innerHTML = _global.translation["auditor_view_report"];
 
         viewReportDiv.onclick = function() {
             if (/disabled/.test(this.className) === false) {
@@ -560,6 +560,7 @@ _global.HTMLCSAuditor = new function()
         }
 
         for (var level in levels) {
+            var levelName = '';
             var msgCount       = levels[level];
             var levelDiv       = _doc.createElement('div');
             levelDiv.className = _prefix + 'issue-tile ' + _prefix + level.toLowerCase();
@@ -567,10 +568,37 @@ _global.HTMLCSAuditor = new function()
             var levelCountDiv       = _doc.createElement('div');
             levelCountDiv.className = 'HTMLCS-tile-text';
 
-            var content = '<strong>' + msgCount + '</strong> ' + level.substr(0, 1).toUpperCase() + level.substr(1);
-            if (msgCount !== 1) {
-                content += 's';
+            switch(level) {
+                case "error":
+                    levelName = _global.translation["auditor_errors"];
+                    break;
+                case "warning":
+                    levelName = _global.translation["auditor_warnings"];
+                    break;
+                case "notice":
+                    levelName = _global.translation["auditor_notices"];
+                    break;
+                default:
+                    levelName = '';
             }
+
+            if (msgCount === 1) {
+              switch(level) {
+                  case "error":
+                      levelName = _global.translation["auditor_error"];
+                      break;
+                  case "warning":
+                      levelName = _global.translation["auditor_warning"];
+                      break;
+                  case "notice":
+                      levelName = _global.translation["auditor_notice"];
+                      break;
+                  default:
+                      levelName = '';
+              }
+            }
+
+            var content = '<strong>' + msgCount + '</strong> ' + levelName;
 
             levelCountDiv.innerHTML = content;
 
@@ -587,7 +615,7 @@ _global.HTMLCSAuditor = new function()
                 }
             }
 
-            var levelSwitch = buildCheckbox(_prefix + 'include-' + level, 'Toggle display of ' + level + ' messages', checked, disabled, function(input) {
+            var levelSwitch = buildCheckbox(_prefix + 'include-' + level, _global.translation["auditor_toggle_display_of"] + ' ' + level + ' ' + _global.translation["auditor_messages"], checked, disabled, function(input) {
                 // Only change checkboxes that haven't been disabled.
                 var enable = false;
 
@@ -647,14 +675,20 @@ _global.HTMLCSAuditor = new function()
         switch (message.type) {
             case HTMLCS.ERROR:
                 typeText = 'Error';
+                typeClass  = typeText.toLowerCase()
+                typeText = _global.translation["auditor_error"];
             break;
 
             case HTMLCS.WARNING:
                 typeText = 'Warning';
+                typeClass  = typeText.toLowerCase()
+                typeText = _global.translation["auditor_warning"];
             break;
 
             case HTMLCS.NOTICE:
                 typeText = 'Notice';
+                typeClass  = typeText.toLowerCase()
+                typeText = _global.translation["auditor_notice"];
             break;
 
             default:
@@ -662,7 +696,7 @@ _global.HTMLCSAuditor = new function()
             break;
         }//end switch
 
-        var typeClass  = typeText.toLowerCase();
+
         var messageMsg = message.msg;
         if (messageMsg.length > 115) {
             messageMsg = messageMsg.substr(0, 115) + '...';
@@ -732,18 +766,25 @@ _global.HTMLCSAuditor = new function()
         }
 
         var typeText  = '';
+        var typeClass = '';
 
         switch (message.type) {
             case HTMLCS.ERROR:
                 typeText = 'Error';
+                typeClass  = _prefix + typeText.toLowerCase()
+                typeText = _global.translation["auditor_error"];
             break;
 
             case HTMLCS.WARNING:
                 typeText = 'Warning';
+                typeClass  = _prefix + typeText.toLowerCase()
+                typeText = _global.translation["auditor_warning"];
             break;
 
             case HTMLCS.NOTICE:
                 typeText = 'Notice';
+                typeClass  = _prefix + typeText.toLowerCase()
+                typeText = _global.translation["auditor_notice"];
             break;
 
             default:
@@ -751,7 +792,6 @@ _global.HTMLCSAuditor = new function()
             break;
         }//end switch
 
-        var typeClass     = _prefix + typeText.toLowerCase();
 
         var standardObj = HTMLCS.util.getElementWindow(_doc)['HTMLCS_' + standard];
         var standardObj = _top['HTMLCS_' + standard];
@@ -796,18 +836,18 @@ _global.HTMLCSAuditor = new function()
 
             var msgElementSourceInner       = _doc.createElement('div');
             msgElementSourceInner.className = _prefix + 'issue-source-inner-u2p';
-            var msg = 'Unable to point to the element associated with this issue.';
+            var msg = _global.translation["auditor_unable_to_point"];
 
             if (message.element.ownerDocument === null) {
-                msg = 'Unable to point to this issue, as it relates to the entire document.';
+                msg = _global.translation["auditor_unable_to_point_entire"];
             } else {
                 var body = message.element.ownerDocument.getElementsByTagName('body')[0];
                 if (HTMLCS.util.isInDocument(message.element) === false) {
-                    msg += 'Unable to point to this element as it has been removed from the document since the report was generated.';
+                    msg += _global.translation["auditor_unable_to_point_removed"];
                 } else if (HTMLCS.util.contains(body, message.element) === false) {
-                    msg = 'Unable to point to this element because it is located outside the document\'s body element.';
+                    msg = _global.translation["auditor_unable_to_point_outside"];
                 } else {
-                    msg += 'Unable to point to this element because it is hidden from view, or does not have a visual representation.';
+                    msg += _global.translation["auditor_unable_to_point_hidden"];
                 }
             }
 
@@ -837,9 +877,9 @@ _global.HTMLCSAuditor = new function()
             msgElementSourceHeader.className = _prefix + 'issue-source-header';
 
             var msgSourceHeaderText       = _doc.createElement('strong');
-            msgSourceHeaderText.innerHTML = 'Code Snippet';
+            msgSourceHeaderText.innerHTML = _global.translation["auditor_code_snippet"];
 
-            var btnPointTo = buildSummaryButton(_prefix + 'button-point-to-element-' + id, 'pointer', 'Point to Element', function() {
+            var btnPointTo = buildSummaryButton(_prefix + 'button-point-to-element-' + id, 'pointer', _global.translation["auditor_point_to_element"], function() {
                 self.pointToElement(message.element);
             });
 
@@ -930,7 +970,7 @@ _global.HTMLCSAuditor = new function()
                 var msgElementSourceInner       = _doc.createElement('div');
                 msgElementSourceInner.className = _prefix + 'issue-source-not-supported';
 
-                var nsText = 'The code snippet functionality is not supported in this browser.';
+                var nsText = _global.translation["auditor_unsupported_browser"];
 
                 msgElementSourceInner.appendChild(_doc.createTextNode(nsText));
                 msgElementSource.appendChild(msgElementSourceInner);
@@ -958,7 +998,7 @@ _global.HTMLCSAuditor = new function()
 
         var pageNum       = _doc.createElement('span');
         pageNum.className = _prefix + 'page-number';
-        pageNum.innerHTML = 'Page ' + page + ' of ' + totalPages;
+        pageNum.innerHTML = _global.translation["auditor_page"] + ' ' + page + ' ' + _global.translation["auditor_of"] + ' ' + totalPages;
         navDiv.appendChild(pageNum);
 
         var next       = _doc.createElement('span');
@@ -984,7 +1024,7 @@ _global.HTMLCSAuditor = new function()
             }
 
             pageNum.innerHTML = '';
-            pageNum.appendChild(document.createTextNode('Page ' + _page + ' of ' + totalPages));
+            pageNum.appendChild(document.createTextNode(_global.translation["auditor_page"] + ' ' + _page + ' ' + _global.translation["auditor_of"] + ' ' + totalPages));
 
             var issueList = _doc.querySelectorAll('.HTMLCS-issue-list')[0];
             issueList.style.marginLeft = ((_page - 1) * -300) + 'px';
@@ -1003,7 +1043,7 @@ _global.HTMLCSAuditor = new function()
             }
 
             pageNum.innerHTML = '';
-            pageNum.appendChild(document.createTextNode('Page ' + _page + ' of ' + totalPages));
+            pageNum.appendChild(document.createTextNode(_global.translation["auditor_page"] + ' ' + _page + ' ' + _global.translation["auditor_of"] + ' ' + totalPages));
 
             var issueList = _doc.querySelectorAll('.HTMLCS-issue-list')[0];
             issueList.style.marginLeft = ((_page - 1) * -300) + 'px';
@@ -1553,8 +1593,8 @@ _global.HTMLCSAuditor = new function()
                 msgElementSource.id  = _prefix + 'settings-updated-notification';
                 _doc.documentElement.querySelector('.HTMLCS-settings').appendChild(msgElementSource);
 
-                var msg = 'HTML_CodeSniffer has been updated to version ' + response.newVersion + '.';
-                msg    += ' <a href="http://squizlabs.github.io/HTML_CodeSniffer/patches/' + response.newVersion + '">View the changelog</a>'
+                var msg = _global.translation["auditor_updated_to"] + ' ' + response.newVersion + '.';
+                msg    += ' <a href="http://squizlabs.github.io/HTML_CodeSniffer/patches/' + response.newVersion + '">'+_global.translation["auditor_view_the_changelog"]+'</a>'
 
                 msgElementSource.innerHTML = msg;
             }//end if
